@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChargeNet — Pitch</title>
+    <meta name="theme-color" content="#070b12" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Syne:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #070b12;
+        --text: #eef3f8;
+        --muted: #96a3b8;
+        --faint: #66758a;
+        --blue: #3aa0ff;
+        --blue-2: #78c0ff;
+        --ink: #07131f;
+        --orange: #fb923c;
+        --violet: #c4b5fd;
+        --line: rgba(238, 243, 248, 0.12);
+        --display: "Syne", Manrope, sans-serif;
+        --sans: Manrope, "Segoe UI", sans-serif;
+        --mono: "IBM Plex Mono", ui-monospace, monospace;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font-family: var(--sans); }
+      body {
+        background:
+          radial-gradient(900px 420px at 88% -10%, rgba(58, 160, 255, 0.16), transparent 55%),
+          radial-gradient(700px 420px at -12% 110%, rgba(88, 70, 180, 0.14), transparent 50%),
+          var(--bg);
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+        background-size: 56px 56px;
+        mask-image: radial-gradient(ellipse at 50% 20%, black, transparent 78%);
+      }
+      button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+      .deck { height: 100%; position: relative; overflow: hidden; }
+      .top {
+        position: absolute;
+        z-index: 3;
+        top: 28px;
+        left: clamp(28px, 6vw, 80px);
+        right: clamp(28px, 6vw, 80px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        pointer-events: none;
+      }
+      .brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 700; letter-spacing: -0.03em; font-size: 18px; }
+      .net {
+        font-family: var(--mono);
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .net i {
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        margin-right: 8px;
+        border-radius: 50%;
+        background: var(--blue);
+        box-shadow: 0 0 10px rgba(58, 160, 255, 0.8);
+      }
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: none;
+        padding: 108px clamp(28px, 6vw, 80px) 96px;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .slide.on { display: flex; }
+      .kicker {
+        margin: 0 0 16px;
+        color: var(--blue);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      h1 {
+        margin: 0;
+        max-width: 14ch;
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: clamp(52px, 7.2vw, 104px);
+        letter-spacing: -0.045em;
+        line-height: 0.92;
+      }
+      h2 {
+        margin: 0;
+        max-width: 16ch;
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: clamp(40px, 5.2vw, 76px);
+        letter-spacing: -0.04em;
+        line-height: 0.96;
+      }
+      .lede {
+        margin: 22px 0 0;
+        max-width: 38ch;
+        font-size: clamp(18px, 2vw, 26px);
+        line-height: 1.35;
+        color: var(--muted);
+      }
+      .points { list-style: none; margin: 32px 0 0; padding: 0; display: flex; flex-direction: column; gap: 16px; max-width: 40ch; }
+      .points li { font-size: clamp(18px, 2.1vw, 28px); line-height: 1.3; }
+      .points strong { font-weight: 700; }
+      .cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; margin-top: 40px; }
+      .cols article, .cards article { border-top: 1px solid var(--line); padding-top: 16px; }
+      .cols span, .cards span, .stat span {
+        display: block;
+        font-family: var(--mono);
+        color: var(--blue);
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+      .cols h3, .cards h3 {
+        margin: 0 0 8px;
+        font-family: var(--display);
+        font-size: clamp(22px, 2vw, 30px);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+      }
+      .cols p, .cards p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.45; }
+      .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 40px; }
+      .cards article {
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 22px 20px 20px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+      .stats { display: flex; flex-wrap: wrap; gap: 28px 56px; margin-top: 36px; align-items: flex-end; }
+      .stat strong {
+        display: block;
+        font-family: var(--mono);
+        font-weight: 500;
+        font-size: clamp(36px, 4.6vw, 64px);
+        letter-spacing: -0.04em;
+        line-height: 0.95;
+      }
+      .stat em { display: block; margin-top: 8px; color: var(--muted); font-style: normal; font-size: 14px; }
+      .stat.hot strong { color: var(--blue); }
+      .note { margin: 28px 0 0; max-width: 62ch; color: var(--faint); font-size: 14px; line-height: 1.45; }
+      .bar { display: flex; height: 14px; width: min(640px, 100%); margin-top: 28px; overflow: hidden; border-radius: 99px; background: rgba(255, 255, 255, 0.08); }
+      .bar i { display: block; height: 100%; }
+      .bar .you { width: 60%; background: var(--blue); }
+      .bar .holders { width: 40%; background: var(--violet); }
+      .legend { display: flex; gap: 22px; margin-top: 12px; color: var(--muted); font-size: 14px; }
+      .legend b { font-weight: 600; color: var(--text); }
+      .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; }
+      .dot.you { background: var(--blue); }
+      .dot.holders { background: var(--violet); }
+      .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 36px; }
+      .facts article {
+        border-radius: 20px;
+        border: 1px solid var(--line);
+        padding: 22px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+      .facts strong {
+        display: block;
+        font-family: var(--mono);
+        font-size: clamp(28px, 3vw, 40px);
+        font-weight: 500;
+        letter-spacing: -0.04em;
+        color: var(--blue);
+        margin-bottom: 8px;
+      }
+      .facts p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.4; }
+      .chrome {
+        position: absolute;
+        z-index: 2;
+        left: clamp(28px, 6vw, 80px);
+        right: clamp(28px, 6vw, 80px);
+        bottom: 28px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .dots { display: flex; gap: 8px; }
+      .dots button { width: 7px; height: 7px; border-radius: 50%; background: rgba(238, 243, 248, 0.25); }
+      .dots button.on { background: var(--blue); box-shadow: 0 0 8px rgba(58, 160, 255, 0.7); }
+      .count { margin-left: auto; font-family: var(--mono); font-size: 12px; color: var(--faint); letter-spacing: 0.08em; }
+      .nav-hit { position: absolute; top: 0; bottom: 72px; width: 12%; z-index: 1; }
+      .nav-hit.left { left: 0; }
+      .nav-hit.right { right: 0; }
+      @media (max-width: 900px) {
+        .cols, .facts { grid-template-columns: 1fr 1fr; }
+        .cards { grid-template-columns: 1fr; }
+        h1 { max-width: none; }
+      }
+      @media (max-width: 640px) {
+        .cols, .facts { grid-template-columns: 1fr; }
+        .top .net { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="deck" id="deck">
+      <div class="top">
+        <div class="brand">
+          <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true">
+            <rect width="32" height="32" rx="9" fill="#3aa0ff" />
+            <path d="M17.2 3.5 7.5 17.2h6.2L12.2 28.5 24.8 13.6h-6.4L17.2 3.5Z" fill="#07131f" />
+          </svg>
+          ChargeNet
+        </div>
+        <div class="net"><i></i>Solana</div>
+      </div>
+
+      <section class="slide cover on" aria-label="Title">
+        <p class="kicker">Solana network</p>
+        <h1>Charge in public. Settle in a stream.</h1>
+        <p class="lede">Private chargers become public nodes. Drivers pay USDC for the energy they use, second by second. Node shares let anyone own a piece of that flow.</p>
+      </section>
+
+      <section class="slide" aria-label="The gap">
+        <p class="kicker">The gap</p>
+        <h2>The charger is private. The car is not.</h2>
+        <ul class="points">
+          <li>A driveway charger sits idle most of the day.</li>
+          <li>A driver still hunts a closed network.</li>
+          <li><strong>The host learns what they earned at the end of the month.</strong></li>
+        </ul>
+      </section>
+
+      <section class="slide" aria-label="What breaks">
+        <p class="kicker">How it gets paid today</p>
+        <h2>The invoice arrives after the cable is gone.</h2>
+        <div class="cols">
+          <article>
+            <span>01</span>
+            <h3>Session bill</h3>
+            <p>One charge, one invoice, settled later. The money does not move while the energy does.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Closed network</h3>
+            <p>The charger only works inside someone else’s app. A private plug never becomes public supply.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Rent, not a claim</h3>
+            <p>The host is a location. They do not hold a claim on the flow their charger creates.</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>Capex only</h3>
+            <p>The charger is a cost. Nobody can buy a share of what it streams.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="slide" aria-label="The system">
+        <p class="kicker">ChargeNet</p>
+        <h2>Stream. Own. Host.</h2>
+        <div class="cards">
+          <article>
+            <span>01 · Driver</span>
+            <h3>Stream</h3>
+            <p>USDC moves while the cable is live. Unplug, and the stream stops. There is no invoice after.</p>
+          </article>
+          <article>
+            <span>02 · Holder</span>
+            <h3>Own</h3>
+            <p>The charger is a tokenized node. A share is a claim on the USDC that node streams.</p>
+          </article>
+          <article>
+            <span>03 · Operator</span>
+            <h3>Host</h3>
+            <p>Set the rate, float as many shares as you want, and keep the rest. A driveway can join the network.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="slide" aria-label="A session">
+        <p class="kicker">A live session</p>
+        <h2>Pay the kilowatt-hour as it happens.</h2>
+        <div class="stats">
+          <div class="stat">
+            <span>Energy</span>
+            <strong>10.47</strong>
+            <em>kWh delivered</em>
+          </div>
+          <div class="stat">
+            <span>On the cable</span>
+            <strong>04:11</strong>
+            <em>at 150 kW</em>
+          </div>
+          <div class="stat hot">
+            <span>Streamed</span>
+            <strong>4.29</strong>
+            <em>USDC, already settled</em>
+          </div>
+        </div>
+        <p class="note">Marina DC Fast · CCS · 0.41 USDC/kWh. About 1.03 USDC per minute at rated power. Figures from a simulated session.</p>
+      </section>
+
+      <section class="slide" aria-label="The node">
+        <p class="kicker">The node</p>
+        <h2>The charger is the asset.</h2>
+        <div class="stats">
+          <div class="stat">
+            <span>Full node</span>
+            <strong>320</strong>
+            <em>SOL · about $48,640</em>
+          </div>
+          <div class="stat hot">
+            <span>Trailing yield</span>
+            <strong>13.5%</strong>
+            <em>last 30 days, annualized</em>
+          </div>
+          <div class="stat">
+            <span>Per share</span>
+            <strong>3.20</strong>
+            <em>SOL · 5.48 USDC / 30 days</em>
+          </div>
+        </div>
+        <p class="note">Marina DC Fast. 25 of 100 shares are for sale. Yield uses SOL at $152. Simulated network, not a forecast.</p>
+      </section>
+
+      <section class="slide" aria-label="The split">
+        <p class="kicker">Who gets paid</p>
+        <h2>Every settlement already knows its owners.</h2>
+        <div class="bar" aria-hidden="true"><i class="you"></i><i class="holders"></i></div>
+        <div class="legend">
+          <span><i class="dot you"></i><b>You · operator 60%</b> · 0.94 USDC</span>
+          <span><i class="dot holders"></i><b>Holders 40%</b> · 0.63 USDC</span>
+        </div>
+        <p class="note">Cedar Lane charger, a home node. One session: 6.03 kWh, 32:53 on the cable, 1.57 USDC streamed at 0.26 USDC/kWh. Unsold shares still pay the operator until someone buys them.</p>
+      </section>
+
+      <section class="slide" aria-label="Solana">
+        <p class="kicker">Why Solana</p>
+        <h2>The share and the payment are the same network.</h2>
+        <div class="facts">
+          <article>
+            <strong>~400 ms</strong>
+            <p>Median settlement in the demo. The stream is a sequence of small USDC transfers, not a monthly close.</p>
+          </article>
+          <article>
+            <strong>USDC</strong>
+            <p>Drivers pay a stable unit per kilowatt-hour. Hosts and holders claim the same token.</p>
+          </article>
+          <article>
+            <strong>One asset</strong>
+            <p>The node share sits on the chain that settles the energy. Owning it and getting paid are not two systems.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="slide" aria-label="Close">
+        <p class="kicker">ChargeNet · Solana</p>
+        <h1>Private charger. Public node.</h1>
+        <p class="lede">A payment that does not wait for the unplug.</p>
+      </section>
+
+      <button class="nav-hit left" type="button" aria-label="Previous slide"></button>
+      <button class="nav-hit right" type="button" aria-label="Next slide"></button>
+      <div class="chrome">
+        <div class="dots" id="dots"></div>
+        <div class="count" id="count"></div>
+      </div>
+    </div>
+    <script>
+      const slides = [...document.querySelectorAll(".slide")];
+      const dots = document.getElementById("dots");
+      const count = document.getElementById("count");
+      let index = 0;
+
+      slides.forEach((_, i) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.setAttribute("aria-label", "Slide " + (i + 1));
+        button.addEventListener("click", () => show(i));
+        dots.appendChild(button);
+      });
+
+      function show(next) {
+        index = (next + slides.length) % slides.length;
+        slides.forEach((slide, i) => slide.classList.toggle("on", i === index));
+        [...dots.children].forEach((dot, i) => dot.classList.toggle("on", i === index));
+        count.textContent = String(index + 1).padStart(2, "0") + "  /  " + String(slides.length).padStart(2, "0");
+        history.replaceState(null, "", "#" + (index + 1));
+      }
+
+      document.querySelector(".nav-hit.left").addEventListener("click", () => show(index - 1));
+      document.querySelector(".nav-hit.right").addEventListener("click", () => show(index + 1));
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowRight" || event.key === " " || event.key === "PageDown") {
+          event.preventDefault();
+          show(index + 1);
+        } else if (event.key === "ArrowLeft" || event.key === "PageUp") {
+          event.preventDefault();
+          show(index - 1);
+        } else if (event.key === "Home") show(0);
+        else if (event.key === "End") show(slides.length - 1);
+      });
+
+      const start = Number(location.hash.replace("#", ""));
+      show(Number.isInteger(start) && start >= 1 && start <= slides.length ? start - 1 : 0);
+    </script>
+  </body>
+</html>
